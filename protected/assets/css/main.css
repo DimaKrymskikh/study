@@ -1,0 +1,13 @@
+.bg-mystyle {
+  background-color: orange;
+}
+
+.pagination-container {
+  margin-top: 2rem;
+}
+
+.adding-film, .removal-film {
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=main.css.map */

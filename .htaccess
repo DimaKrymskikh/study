@@ -1,0 +1,7 @@
+RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^\/protected/assets/css/(.*).css
+RewriteCond %{REQUEST_URI} !^\/protected/assets/js/(.*).js
+RewriteCond %{REQUEST_URI} !^\/protected/assets/svg/(.*).svg
+RewriteRule . index.php [L]

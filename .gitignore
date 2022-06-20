@@ -1,0 +1,7 @@
+# Файл настроек NetBeans
+/nbproject/
+
+# Это генерирует Composer
+/vendor/
+composer.lock
+

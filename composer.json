@@ -1,0 +1,14 @@
+{
+    "name": "dima/study",
+    "autoload": {
+        "psr-4": {
+            "": "protected"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "10.0.x-dev"
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
