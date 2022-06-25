@@ -4,6 +4,9 @@ namespace controllers;
 
 use base\BaseController;
 
+/**
+ * Отрисовывает главную страницу
+ */
 class CommonController extends BaseController 
 {
     protected const TEMPLATE = 'layout/template.php';
@@ -11,14 +14,10 @@ class CommonController extends BaseController
     protected const FILE_FOLDER = 'common/';
 
 
-    public function indexAction(): string {
+    public function indexAction(): string
+    {
         $this->title = 'Главная страница';
 
         return $this->render('main.php', []);
-    }
-    
-    public function catalogAction(): string {
-        $this->title = 'Каталог';
-        return $this->render('catalog.php', []);
     }
 }

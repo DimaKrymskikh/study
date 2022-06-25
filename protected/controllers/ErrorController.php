@@ -4,6 +4,9 @@ namespace controllers;
 
 use base\BaseController;
 
+/**
+ * Используется для отрисовки пользовательского исключения
+ */
 class ErrorController extends BaseController 
 {
     protected const TEMPLATE = 'layout/template.php';

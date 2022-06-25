@@ -9,9 +9,7 @@
     <h1><?= $userLogin ?>. Личный кабинет</h1>
     
     <h2>Список доступных фильмов</h2> 
-    <?php if ($filmsNumberTotal) { ?>
-
-    <?php
+    <?php if ($filmsList->filmsNumberTotal) { 
         $actionUrl = "/user/personalArea";
         require_once __DIR__ . '/../block/filmsNumber.php';
     ?>
@@ -27,7 +25,7 @@
                     
                 </span>
             </div>
-            <caption>Показано <?= $filmsNumberOnPage ?> фильмов из <?= $filmsNumberTotal ?></caption>
+            <caption>Показано <?= $actualNumberOfFilmsOnPage ?> фильмов из <?= $filmsList->filmsNumberTotal ?></caption>
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -40,7 +38,7 @@
             </thead>
             <tbody>
                 <?php 
-                    foreach ($films as $film) {
+                    foreach ($filmsList->films as $film) {
                 ?>
                     <tr>
                         <th scope="row"><?= $film->n ?></th>
@@ -78,7 +76,7 @@
     <?php } ?>
     
     <?php 
-        if ($filmsNumberTotal) { 
+        if ($filmsList->filmsNumberTotal) { 
             echo $pagination;
         }
     ?>
@@ -102,7 +100,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
-                    <a id="user-delete" class="btn btn-danger" href="/user/delete">Да</a>
+                    <a id="user-delete" class="btn btn-danger" href="/user/deleteAccount">Да</a>
                 </div>
             </div>
         </div>

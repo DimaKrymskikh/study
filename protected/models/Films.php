@@ -6,15 +6,25 @@ use base\App;
 use base\Cookie;
 use base\Pagination;
 
+/**
+ * Извлекает данные, связанные с таблицей film
+ */
 class Films
 {
     const DEFAULT_FILM_ID = 0;
 
-    public function getFilms(int $activePage, int $filmsNumberOnPage, bool $isPersonal = false): array
+    /**
+     * Извлекает список фильмов для заданной страницы пагинации
+     * @param int $activePage - заданная страница пагинации
+     * @param int $filmsNumberOnPage - предполагаемое число фильмов на странице
+     * @param bool $isPersonal - если true, извлекаются фильмы залогиненного пользователя
+     * @return object
+     */
+    public function getFilmsList(int $activePage, int $filmsNumberOnPage, bool $isPersonal = false): object
     {
         $condition = $isPersonal ? 'WHERE fu.user_id = :userId' : '';
         
-        return App::$db->selectObjects(<<<SQL
+        $films = App::$db->selectObjects(<<<SQL
                 WITH _ AS (
                     SELECT
                         f.film_id,
@@ -45,8 +55,19 @@ class Films
                 'to' => Pagination::to($activePage, $filmsNumberOnPage),
                 'userId' => Cookie::getId()
             ]);
+        
+        $filmsList = (object) [];
+        $filmsList->films = $films;
+        $filmsList->filmsNumberTotal = isset($films[0]) ? $films[0]->count : 0;
+        
+        return $filmsList;
     }
     
+    /**
+     * Добавление фильма в список пользователя
+     * @param int $filmId - id добавляемого фильма
+     * @return void
+     */
     public function addingFilm(int $filmId): void
     {
         App::$db->execute(<<<SQL
@@ -58,6 +79,11 @@ class Films
             ]);
     }
     
+    /**
+     * Извлекает данные фильма
+     * @param int $filmId - id фильма
+     * @return object
+     */
     public function getFilm(int $filmId): object
     {
         return App::$db->selectObject(<<<SQL
@@ -69,6 +95,11 @@ class Films
             SQL, [$filmId]);
     }
     
+    /**
+     * Извлекает потробные данные о фильме
+     * @param int $filmId - id фильма
+     * @return object
+     */
     public function getFilmCard(int $filmId): object
     {
         $film = App::$db->selectObject(<<<SQL

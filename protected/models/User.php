@@ -87,29 +87,33 @@ class User
                 SELECT id, login, password FROM info.users WHERE login = :userLogin
             SQL, ['userLogin' => $userLogin]);
 
-        if ($row) {
-            $this->id = $row->id;
-            $this->login = $row->login;
-            $this->password = $row->password;
-        } else {
-            $this->id = null;
-            $this->login = null;
-            $this->password = null;
-        }
+        $this->id = isset($row->id) ? $row->id : self::DEFAULT_USER_ID;
+        $this->login = isset($row->login) ? $row->login : '';
+        $this->password = isset($row->password) ? $row->password : '';
     }
     
-    public static function delete(int $userId): void 
+    /**
+     * Удаляет учётную запись пользователя
+     * @return void
+     */
+    public static function deleteAccount(): void 
     {
         App::$db->execute(<<<SQL
-                DELETE FROM info.users WHERE id = :userId
-            SQL, ['userId' => $userId]);
+                DELETE FROM info.users WHERE id = ?
+            SQL, [Cookie::getId()]);
     }
     
-    public static function deleteFilm(int $userId, int $filmId) {
+    /**
+     * Удаляет фильм из списка пользователя
+     * @param int $filmId
+     * @return void
+     */
+    public static function deleteFilm(int $filmId): void
+    {
         App::$db->execute(<<<SQL
                 DELETE FROM info.film_users WHERE user_id = :userId AND film_id = :filmId
             SQL, [
-                'userId' => $userId,
+                'userId' => Cookie::getId(),
                 'filmId' => $filmId
             ]);
     }

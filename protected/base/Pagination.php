@@ -5,6 +5,7 @@ namespace base;
 /**
  * Класс реализующий пагинацию
  * @property-read int $activePage - номер активной страницы документа
+ * @property-read int $itemsNumberOnPage - планируемое число элементов на странице
  * @property-read int $pagesNumber - число страниц документа
  * @property-read int $firstButton - первая кнопка пагинации
  * @property-read int $lastButton - последняя кнопка пагинации
@@ -18,15 +19,10 @@ class Pagination
     // Дефолтное значение числа кнопок пагинации
     const DEFAULT_BUTTONS_NUMBER = 5;
     
-    // Номер активной страницы документа
     public readonly int $activePage;
-    // Число эдементов на странице
     public readonly int $itemsNumberOnPage;
-    // Число страниц документа
     public readonly int $pagesNumber;
-    // Первая кнопка пагинации
     public readonly int $firstButton;
-    // Последняя кнопка пагинации
     public readonly int $lastButton;
 
     /**
@@ -89,6 +85,14 @@ class Pagination
         return $activePage * $itemsNumberOnPage;
     }
     
+    /**
+     * Возвращает число элементов на активной странице
+     * На последней странице число элементов может быть меньше $itemsNumberOnPage
+     * @param int $activePage - номер активной страницы
+     * @param int $itemsNumberOnPage - запланированное число элементов на странице
+     * @param int $itemsNumberTotal - число эдементов во всём документе
+     * @return int
+     */
     public static function getElementsNumberOnActivePage(int $activePage, int $itemsNumberOnPage, int $itemsNumberTotal): int
     {
         return min($itemsNumberOnPage, $itemsNumberTotal - ($activePage - 1) * $itemsNumberOnPage);

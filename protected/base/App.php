@@ -5,26 +5,40 @@ namespace base;
 use controllers\CommonController;
 use base\PrintException;
 
+/**
+ * Базовый класс проекта
+ * Выполняет постоянное соединение с базой
+ * Реализует маршрутизацию
+ * @property DBQuery $db - хранит соединение с базой
+ */
 class App 
 {
     public static DBQuery $db;
 
     public function __construct(object $config) 
     {
+        // Создаём соединение с базой
         self::$db = new DBQuery($config->db);
     }
     
+    /**
+     * Находит нужный контроллер и экшен
+     * @return void
+     */
     public function run(): void
     {
-        sleep(1);
+        // sleep для проекта не нужен, но можно раскомментировать, чтобы работа приложения походила на реальный сайт.
+        // Можно будет увидеть лоадер.
+//        sleep(1);
         
+        // Перехватываем исключения такие как 'Страница не найдена'
         try {
             $this->router();
         } catch (PrintException) {}
     }
 
     /**
-     * Задаёт маршрузацию
+     * Задаёт маршрутизацию
      * @return void
      */
     private function router(): void
@@ -33,6 +47,9 @@ class App
         
         if ($truncatedUri === '') {
             echo (new CommonController())->indexAction();
+        } else if ($truncatedUri === 'error/index') {
+            // Бросаем исключение, чтобы экшен был вызван с параметром
+            throw new PrintException('Страница не найдена');
         } else {
             $arrayUri = preg_split('/\//', $truncatedUri);
             if (count($arrayUri) !== 2) {

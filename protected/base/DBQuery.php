@@ -7,6 +7,7 @@ use base\PrintException;
 
 /**
  * Класс для взаимодействия с базой данных
+ * @property \PDO $dbh - соединение с базой
  */
 class DBQuery 
 {
@@ -71,12 +72,12 @@ class DBQuery
      * @param array $param
      * @return object|null
      */
-    public function selectObject(string $sql, array $param): ?object 
+    public function selectObject(string $sql, array $param): object 
     {
         $sth = $this->dbh->prepare($sql);
         $sth->execute($param);
         $result = $sth->fetch(\PDO::FETCH_OBJ);
-        return $result ?: null;
+        return $result ?: (object)[];
     }
     
     /**

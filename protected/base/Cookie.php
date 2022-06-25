@@ -2,20 +2,35 @@
 
 namespace base;
 
+/**
+ * Класс для работы с куки пользователя
+ */
 class Cookie 
 {
+    // Используется для замены null при работе с id пользователя
     const DEFAULT_INT = 0; 
     
-    public static function set(int $userId): void {
+    /**
+     * Сохраняет id пользователя в куки до тех пор, пока открыта страница в браузере
+     * @param int $userId - id пользователя
+     * @return void
+     */
+    public static function set(int $userId): void
+    {
         setcookie("userId", $userId, 0, '/');
     }
     
-    public static function clear(): void {
+    /**
+     * Очищает куки
+     * @return void
+     */
+    public static function clear(): void
+    {
         setcookie("userId", '', time() - 1, '/');
     }
     
     /**
-     * Авторизован пользователь или нет
+     * Проверяет авторизацию пользователя
      * @return bool
      */
     public static function isLogin(): bool

@@ -14,7 +14,7 @@
 
 <div class="table-responsive">
     <table id="films-table" class="table table-striped table-hover  caption-top table-bordered">
-        <caption>Показано <?= $filmsNumberOnPage ?> фильмов из <?= $filmsNumberTotal ?></caption>
+        <caption>Показано <?= $actualNumberOfFilmsOnPage ?> фильмов из <?= $filmsList->filmsNumberTotal ?></caption>
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <?php 
-                foreach ($films as $film) {
+                foreach ($filmsList->films as $film) {
             ?>
                 <tr>
                     <th scope="row"><?= $film->n ?></th>
