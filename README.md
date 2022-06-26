@@ -1,10 +1,13 @@
-После клонирования нужно выполнить 
+После клонирования нужно выполнить
+
     composer install
 
 Тесты запускаются командой
+
     composer test
 
 Базовая команда для восстановления базы
+
     pg_restore -d newdb dvdrental.dump
 
 Нужно поправить файл protected/config/db.php для фактического сервера progtest
